@@ -1,0 +1,44 @@
+{
+    "experiments": [
+        {
+            "type": "ner_search",
+            "library": "tensorflow",
+            "experiment_name": "Enhancement of ddi classification - Experiments of MDFSADDI Dataset - Experiment 2 - Only TUIs",
+            "experiment_description": "Our aim is to find best tui similarity matrix based on given thresholds in this experiment. Each threshold values step up 0.5 in every single model training. Every created model uses one similarity matrix as an input of model. MDFSADDI dataset is used as a dataset.",
+            "default_model": {
+                "model_type": "experiment_configurations.models.DNN",
+                "params": {
+                    "batch_size": 128,
+                    "epochs": 20
+                }
+            },
+            "tracking_config": {
+                "use_tracking": "true",
+                "library": "mlflow",
+                "params": {
+                    "mlflow": {
+                        "tracking_uri": "sqlite:///mlflow.db",
+                        "artifact_location": "mlflow",
+                        "experiment_tags": {
+                            "project_name": "MDFSADDI with similarity matrices of tuis",
+                            "project_quarter": "Q2-2025",
+                            "mlflow.note.content": "Our aim is to find best tui similarity matrix based on given thresholds in this experiment. Each threshold values step up 0.5 in every single model training. Every created model uses one similarity matrix as an input of model. MDFSADDI dataset is used as a dataset"
+                        }
+                    }
+                }
+            },
+            "dataset": {
+                "dataset_type": "datasets.MDFSADDIDataset",
+                "dataset_splitter_type": "datasets.dataset_splitter.DatasetSplitter",
+                "columns": [
+                    "tui"
+                ],
+                "additional_config": {
+                    "ner": {
+                        "data_file": "ner/output/ctakes/ctakes_ner.pkl"
+                    }
+                }
+            }
+        }
+    ]
+}

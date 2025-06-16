@@ -1,0 +1,11 @@
+Apache CTakes çalıştırıldıktan sonra run_ner çalıştırılmalı
+
+Drugbank indirildikten sonra
+parsing
+kaggle
+
+kaggle'a aktarma yapılmaz
+
+
+
+result dosyalarını aktar, embedding configurations aktar

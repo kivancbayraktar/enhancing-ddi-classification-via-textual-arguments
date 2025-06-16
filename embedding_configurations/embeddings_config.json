@@ -1,0 +1,51 @@
+[
+    {
+        "id": "0295501b-e673-43e9-af91-7d06ec21cb7d",
+        "name": "pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb",
+        "kaggle_id": "kivancbayraktar/0295501b-e673-43e9-af91-7d06ec21cb7d",
+        "kaggle_title": "pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb",
+        "kaggle_description": "This dataset contains text data from the DrugBank database; embeddings were created using pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb",
+        "kaggle_licenses": [
+            {
+                "name": "CC0-1.0"
+            }
+        ],
+        "embedding_model_type": "langchain.embeddings.HuggingFaceEmbeddings",
+        "text_splitters_types": [
+            {
+                "type": "langchain.text_splitter.SentenceTransformersTokenTextSplitter",
+                "suffix": "chunk",
+                "params": {
+                    "model_name": "pritamdeka/BioBERT-mnli-snli-scinli-scitail-mednli-stsb",
+                    "chunk_overlap": 50
+                }
+            },
+            {
+                "type": "ddi_fw.langchain.SentenceSplitter",
+                "suffix": "sentence"
+            }
+        ],
+        "columns": [
+            "id",
+            "name"
+        ],
+        "page_content_columns": [
+            "all_text",
+            "description",
+            "synthesis_reference",
+            "indication",
+            "pharmacodynamics",
+            "mechanism_of_action",
+            "toxicity",
+            "metabolism",
+            "absorption",
+            "half_life",
+            "protein_binding",
+            "route_of_elimination",
+            "volume_of_distribution",
+            "clearance"
+        ],
+        "batch_size": 1024,
+        "model_kwargs": {}
+    }
+]

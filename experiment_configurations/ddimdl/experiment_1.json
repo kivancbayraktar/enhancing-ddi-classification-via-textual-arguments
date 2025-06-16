@@ -1,0 +1,58 @@
+{
+    "experiments": [
+        {
+            "type": "general",
+            "library": "tensorflow",
+            "experiment_name": "Enhancement of ddi classification - Experiment 1",
+            "experiment_description": "Our aim is to find most discriminative text type with generating text embeddings of every single text type. DDIMDL dataset is used as a dataset.",
+            "default_model": {
+                "model_type": "experiment_configurations.models.DNN",
+                "params": {
+                    "batch_size": 128,
+                    "epochs": 100
+                }
+            },
+            "tracking_config": {
+                "use_tracking": "true",
+                "library": "mlflow",
+                "params": {
+                    "mlflow": {
+                        "tracking_uri": "sqlite:///mlflow.db",
+                        "artifact_location": "mlflow",
+                        "experiment_tags": {
+                            "project_name": "Experiment-DDIMDL-1 only text embeddings",
+                            "project_quarter": "Q4-2024",
+                            "mlflow.note.content": "Our aim is to find most discriminative text type with generating text embeddings of every single text type. DDIMDL dataset is used as a dataset."
+                        }
+                    }
+                }
+            },
+            "dataset": {
+                "dataset_type": "datasets.DDIMDLDataset",
+                "dataset_splitter_type": "datasets.DatasetSplitter",
+                "columns": [
+                    "all_text",
+                    "description",
+                    "synthesis_reference",
+                    "indication",
+                    "pharmacodynamics",
+                    "mechanism_of_action",
+                    "toxicity",
+                    "metabolism",
+                    "absorption",
+                    "half_life",
+                    "protein_binding",
+                    "route_of_elimination",
+                    "volume_of_distribution",
+                    "clearance"
+                ]
+            },
+            "vector_databases": {
+                "db_type": "chroma",
+                "vector_db_persist_directory": "chroma_db",
+                "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence",
+                "embedding_pooling_strategy": "ddi_fw.langchain.SumPoolingStrategy"
+            }
+        }
+    ]
+}

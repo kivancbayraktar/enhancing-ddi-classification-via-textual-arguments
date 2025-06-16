@@ -1,0 +1,59 @@
+{
+    "experiments": [
+        {
+            "type": "general",
+            "library": "tensorflow",
+            "experiment_name": "Enhancement of ddi classification - Experiments of MDFSADDI Dataset -  (BAAI/bge-large-en-v1.5), chunk version",
+            "experiment_description": "Experiments of MDFSADDI Dataset",
+            "default_model": {
+                "model_type": "experiment_configurations.models.DNN",
+                "params": {
+                    "batch_size": 128,
+                    "epochs": 100
+                }
+            },
+            "tracking_config": {
+                "use_tracking": "true",
+                "library": "mlflow",
+                "params": {
+                    "mlflow": {
+                        "tracking_uri": "http://35.225.113.222:5000",
+                        "artifact_location": "gs://thesis-mlflow-experiments-bucket",
+                        "experiment_tags": {
+                            "project_name": "MDFSADDI-Experiment-2",
+                            "project_quarter": "Q2-2025",
+                            "mlflow.note.content": "MDFSADDI-Experiment-2"
+                        }
+                    }
+                }
+            },
+            "dataset": {
+                "dataset_type": "ddi_fw.datasets.MDFSADDIDataset",
+                "dataset_splitter_type": "ddi_fw.datasets.dataset_splitter.DatasetSplitter",
+                "columns": [
+                "all_text",
+                "description",
+                "synthesis_reference",
+                "indication",
+                "pharmacodynamics",
+                "mechanism_of_action",
+                "toxicity",
+                "metabolism",
+                "absorption",
+                "half_life",
+                "protein_binding",
+                "route_of_elimination",
+                "volume_of_distribution",
+                "clearance"
+                ]
+            },
+            "vector_databases": {
+                "db_type": "chroma",
+                "vector_db_persist_directory": "chroma_db",
+                "vector_db_collection_name": "988db6fb-3487-4c74-9eed-10f38da75dee_chunk",
+                "embedding_pooling_strategy": "ddi_fw.langchain.SumPoolingStrategy"
+                 
+            }
+        }
+    ]
+}

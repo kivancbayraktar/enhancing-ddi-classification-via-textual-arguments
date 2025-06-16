@@ -1,0 +1,115 @@
+{
+    "experiments": [
+        {
+            "type": "general",
+            "library": "tensorflow",
+            "experiment_name": "Enhancement of ddi classification - Experiment 3",
+            "experiment_description": "In this experiment we combine 3 different types of inputs: chemical similarity matrices, similarity matrices of tuis, cuis and entities and text embeddings. Our aim is to find most successful combination of input types. DDIMDL dataset is used as a dataset.",
+            "default_model": {
+                "model_type": "experiment_configurations.models.DNN",
+                "params": {
+                    "batch_size": 128,
+                    "epochs": 100
+                }
+            },
+            "tracking_config": {
+                "use_tracking": "true",
+                "library": "mlflow",
+                "params": {
+                    "mlflow": {
+                        "tracking_uri": "sqlite:///mlflow.db",
+                        "artifact_location": "mlflow",
+                        "experiment_tags": {
+                            "project_name": "DDIMDL with similarity matrices & text embeddings",
+                            "project_quarter": "Q4-2024",
+                            "mlflow.note.content": ""
+                        }
+                    }
+                }
+            },
+            "dataset": {
+                "dataset_type": "datasets.DDIMDLDataset",
+                "dataset_splitter_type": "datasets.DatasetSplitter",
+                "columns": [
+                    "enzyme",
+                    "target",
+                    "pathway",
+                    "smile",
+                    "all_text",
+                    "indication",
+                    "description",
+                    "mechanism_of_action",
+                    "pharmacodynamics",
+                    "tui",
+                    "cui",
+                    "entities"
+                ],
+                "additional_config": {
+                    "ner": {
+                        "data_file": "ner/output/ctakes/ctakes_ner.pkl",
+                        "thresholds": {
+                            "method": "idf",
+                            "tui": 2.0,
+                            "cui": 5.5,
+                            "entities": 7.0
+                        }
+                    }
+                }
+            },
+            "vector_databases": {
+                "db_type": "chroma",
+                "persist_directory": "chroma_db",
+                "collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence",
+                "embedding_pooling_strategy": "ddi_fw.langchain.SumPoolingStrategy",
+                "column_embedding_configs": [
+                    {
+                        "column": "all_text",
+                        "vector_db_persist_directory": "chroma_db",
+                        "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence"
+                    },
+                    {
+                        "column": "indication",
+                        "vector_db_persist_directory": "chroma_db",
+                        "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence"
+                    },
+                    {
+                        "column": "description",
+                        "vector_db_persist_directory": "chroma_db",
+                        "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence"
+                    },
+                    {
+                        "column": "mechanism_of_action",
+                        "vector_db_persist_directory": "chroma_db",
+                        "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence"
+                    },
+                    {
+                        "column": "pharmacodynamics",
+                        "vector_db_persist_directory": "chroma_db",
+                        "vector_db_collection_name": "0295501b-e673-43e9-af91-7d06ec21cb7d_sentence"
+                    }
+                ]
+            },
+            "combination_strategy": {
+                "type": "ddi_fw.pipeline.CustomCombinationStrategy",
+                "params": {
+                    "group_1": [
+                        "smile",
+                        "enzyme",
+                        "target",
+                        "pathway",
+                        "tui",
+                        "cui",
+                        "entities"
+                    ],
+                    "group_2": [
+                        "all_text_embedding",
+                        "indication_embedding",
+                        "description_embedding",
+                        "mechanism_of_action_embedding",
+                        "pharmacodynamics_embedding"
+                    ]
+                }
+            }
+        }
+    ]
+}
