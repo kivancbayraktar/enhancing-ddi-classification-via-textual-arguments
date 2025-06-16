@@ -1,7 +1,5 @@
 from ner.ner import CTakesNER
-from datasets import CustomDataset
-
-from datasets.db_utils import create_connection
+from ddi_fw.datasets.db_utils import create_connection
 
 import pandas as pd
 import numpy as np
