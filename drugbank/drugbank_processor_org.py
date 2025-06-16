@@ -9,7 +9,7 @@ import csv
 from rdkit import Chem
 from rdkit.Chem import AllChem
 import numpy as np
-from ddi_fw.drugbank.event_extractor import EventExtractor
+from drugbank.event_extractor import EventExtractor
 
 from zip_helper import ZipHelper
 # from event_extractor import EventExtractor

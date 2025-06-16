@@ -8,7 +8,7 @@ import chromadb
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field, computed_field
-from ddi_fw.datasets.dataset_splitter import DatasetSplitter
+from datasets.dataset_splitter import DatasetSplitter
 from ddi_fw.utils.utils import create_folder_if_not_exists
 
 

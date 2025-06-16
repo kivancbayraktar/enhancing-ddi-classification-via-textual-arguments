@@ -1,7 +1,7 @@
 import pathlib
 from typing import Any, List, Optional, Tuple
-from ddi_fw.datasets.core import BaseDataset, TextDatasetMixin, generate_sim_matrices_new, generate_vectors
-from ddi_fw.datasets.db_utils import create_connection
+from datasets.core import BaseDataset, TextDatasetMixin, generate_sim_matrices_new, generate_vectors
+from datasets.db_utils import create_connection
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel, Field, model_validator, root_validator
@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from sklearn.preprocessing import LabelBinarizer
 import logging
 
-from ddi_fw.ner.ner import CTakesNER
+from ner.ner import CTakesNER
 
 
 try:
