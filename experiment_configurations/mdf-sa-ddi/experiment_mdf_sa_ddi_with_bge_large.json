@@ -28,7 +28,7 @@
                 }
             },
             "dataset": {
-                "dataset_type": "ddi_fw.datasets.MDFSADDIDataset",
+                "dataset_type": "ddi_fw.research_datasets.MDFSADDIDataset",
                 "dataset_splitter_type": "ddi_fw.datasets.dataset_splitter.DatasetSplitter",
                 "columns": [
                 "all_text",

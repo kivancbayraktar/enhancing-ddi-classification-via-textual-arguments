@@ -28,7 +28,7 @@
                 }
             },
             "dataset": {
-                "dataset_type": "datasets.MDFSADDIDataset",
+                "dataset_type": "research_datasets.MDFSADDIDataset",
                 "dataset_splitter_type": "datasets.dataset_splitter.DatasetSplitter",
                 "columns": [
                 "all_text",

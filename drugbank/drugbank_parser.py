@@ -66,20 +66,20 @@ def modify_keys(d):
 
 
 class DrugBankParser:
-    def __init__(self, zip_file='drugbank.zip', input_path='./drugbank'):
+    def __init__(self, zip_file='drugbank.zip', input_path='data/drugbank'):
 
         # sys.path.insert(0,'/content/drive/My Drive/drugbank')
         # HERE = '/content/drive/My Drive/drugbank'
         HERE = input_path
         xsd_file='drugbank.xsd'
-        DRUGBANK_XSD = impresources.files("ddi_fw.drugbank").joinpath("drugbank.xsd").open()
+        DRUGBANK_XSD = impresources.files("drugbank").joinpath("drugbank.xsd").open()
         # DRUGBANK_XSD = HERE + '/' + xsd_file
         DRUGBANK_ZIP = HERE + '/' + zip_file
         xsd = xmlschema.XMLSchema(DRUGBANK_XSD)
         self.drug_type_schema = xsd.complex_types[1]
         self.zf = zipfile.ZipFile(DRUGBANK_ZIP, 'r')
 
-    def parse(self, save_path='./drugbank/drugs', override = False):
+    def parse(self, save_path='data/drugbank/drugs', override = False):
         if not override:
             print('No parsing process has been executed!!!')
             return
@@ -150,7 +150,7 @@ class DrugBankParser:
 
         print("Done")
 
-    def zip_files(self, chunk_size=1000, input_path='./drugbank/drugs', output_path='./drugbank/zips'):
+    def zip_files(self, chunk_size=1000, input_path='data/drugbank/drugs', output_path='data/drugbank/zips'):
         zip_helper = ZipHelper()
         zip_helper.zip(zip_prefix='drugs', input_path=input_path,
                        output_path=output_path, chunk_size=chunk_size)

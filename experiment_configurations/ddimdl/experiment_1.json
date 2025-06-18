@@ -28,8 +28,8 @@
                 }
             },
             "dataset": {
-                "dataset_type": "datasets.DDIMDLDataset",
-                "dataset_splitter_type": "datasets.DatasetSplitter",
+                "dataset_type": "research_datasets.ddimdl.DDIMDLDataset",
+                "dataset_splitter_type": "ddi_fw.datasets.DatasetSplitter",
                 "columns": [
                     "all_text",
                     "description",
