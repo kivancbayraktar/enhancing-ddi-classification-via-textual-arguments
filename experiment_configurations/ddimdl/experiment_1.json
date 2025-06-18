@@ -28,7 +28,7 @@
                 }
             },
             "dataset": {
-                "dataset_type": "research_datasets.ddimdl.DDIMDLDataset",
+                "dataset_type": "research_datasets.DDIMDLDataset",
                 "dataset_splitter_type": "ddi_fw.datasets.DatasetSplitter",
                 "columns": [
                     "all_text",
