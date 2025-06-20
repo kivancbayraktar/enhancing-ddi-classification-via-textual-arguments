@@ -67,7 +67,7 @@ class CTakesNER(BaseModel,NERInterface):
             Creates a dataframe from the NER results and saves it as a pickle file.
     """
     
-    df: Optional[pd.DataFrame]
+    df: Optional[pd.DataFrame] = None
     key: str = 'drugbank_id'
     api_url: str = 'http://localhost:8080/ctakes-web-rest/service/analyze?pipeline=Default'
     output_path: str = 'ner-output/ctakes'

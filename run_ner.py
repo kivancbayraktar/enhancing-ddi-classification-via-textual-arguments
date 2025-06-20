@@ -76,7 +76,7 @@ def __select_all_drugs_as_dataframe__(conn):
     return df
 
 
-db = f'data/drugbank/db/zips/drugbank.db'
+db = f'data/drugbank/db/drugbank.db'
 conn = create_connection(db)
 drugs_df = __select_all_drugs_as_dataframe__(conn)
 

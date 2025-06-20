@@ -11,11 +11,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 import numpy as np
 from drugbank.event_extractor import EventExtractor
-from ner.ner import CTakesNER
-
 from ddi_fw.utils import ZipHelper
-# from event_extractor import EventExtractor
-
 
 def multiline_to_singleline(multiline):
     if multiline is None:
@@ -67,13 +63,10 @@ class DrugBankProcessor():
         return external_identifier_list
 
     def process(self,
-                ner_data_path,
                 input_path='drugs',
                 output_path='output',
                 db_path=r"./drugbank.db"):
- 
-        ner_df = CTakesNER().load(ner_data_path)
- 
+
 
         drug_rows = []
         all_ddis = []
@@ -87,7 +80,7 @@ class DrugBankProcessor():
 
                 drug_1 = data['name']
                 drug_1_id = [d['value']
-                                for d in data['drugbank-id'] if d['primary'] == True][0]
+                             for d in data['drugbank-id'] if d['primary'] == True][0]
                 description = multiline_to_singleline(
                     data['description'])
                 if data['drug-interactions'] is not None:
@@ -175,54 +168,28 @@ class DrugBankProcessor():
                 if morgan_hashed is None:
                     morgan_hashed = np.zeros(881).tolist()
 
-                # TODO cui, tui, entities other types of texts, test it
-                tuis_description = ner_df[ner_df['drugbank_id']
-                                            == drug_1_id]['tui_description'].values
-                if len(tuis_description) > 0:
-                    tuis_description = tuis_description[0]
-                else:
-                    tuis_description = None
-
-                cuis_description = ner_df[ner_df['drugbank_id']
-                                            == drug_1_id]['cui_description'].values
-                if len(cuis_description) > 0:
-                    cuis_description = cuis_description[0]
-                else:
-                    cuis_description = None
-
-                entities_description = ner_df[ner_df['drugbank_id']
-                                                == drug_1_id]['entities_description'].values
-                if len(entities_description) > 0:
-                    entities_description = entities_description[0]
-                else:
-                    entities_description = None
- 
-
                 row = {'drugbank_id': drug_1_id,
-                        'name': drug_1,
-                        'description': description,
-                        'synthesis_reference': synthesis_reference,
-                        'indication': indication,
-                        'pharmacodynamics': pharmacodynamics,
-                        'mechanism_of_action': mechanism_of_action,
-                        'toxicity': toxicity,
-                        'metabolism': metabolism,
-                        'absorption': absorption,
-                        'half_life': half_life,
-                        'protein_binding': protein_binding,
-                        'route_of_elimination': route_of_elimination,
-                        'volume_of_distribution': volume_of_distribution,
-                        'clearance': clearance,
-                        'smiles': smiles,
-                        'smiles_morgan_fingerprint': ','.join(map(str, morgan_hashed)),
-                        'enzymes_polypeptides': '|'.join(enzymes_polypeptides) if enzymes_polypeptides is not None else None,
-                        'targets_polypeptides': '|'.join(targets_polypeptides) if targets_polypeptides is not None else None,
-                        'pathways': '|'.join(pathways) if pathways is not None else None,
-                        'tuis_description': '|'.join(tuis_description) if tuis_description is not None else None,
-                        'cuis_description': '|'.join(cuis_description) if cuis_description is not None else None,
-                        'entities_description': '|'.join(entities_description) if entities_description is not None else None
-                        #    'external_identifiers': external_identifiers_dict
-                        }
+                       'name': drug_1,
+                       'description': description,
+                       'synthesis_reference': synthesis_reference,
+                       'indication': indication,
+                       'pharmacodynamics': pharmacodynamics,
+                       'mechanism_of_action': mechanism_of_action,
+                       'toxicity': toxicity,
+                       'metabolism': metabolism,
+                       'absorption': absorption,
+                       'half_life': half_life,
+                       'protein_binding': protein_binding,
+                       'route_of_elimination': route_of_elimination,
+                       'volume_of_distribution': volume_of_distribution,
+                       'clearance': clearance,
+                       'smiles': smiles,
+                       'smiles_morgan_fingerprint': ','.join(map(str, morgan_hashed)),
+                       'enzymes_polypeptides': '|'.join(enzymes_polypeptides) if enzymes_polypeptides is not None else None,
+                       'targets_polypeptides': '|'.join(targets_polypeptides) if targets_polypeptides is not None else None,
+                       'pathways': '|'.join(pathways) if pathways is not None else None
+                       #    'external_identifiers': external_identifiers_dict
+                       }
                 drug_rows.append(row)
 
         drug_names = ['DRUG']
@@ -259,12 +226,8 @@ class DrugBankProcessor():
                             if_exists='replace', index=True)
         ext_id_df = pd.DataFrame.from_records(external_identifier_list)
         ext_id_df.to_sql('_ExternalIdentifiers', conn,
-                            if_exists='replace', index=True)
+                         if_exists='replace', index=True)
 
-        zip_helper.zip_single_file(
-            file_path=db_path, output_path=output_path+'/zips', name='db')
+        zip_helper.zip_single_file(zip_name='db',
+                                   file_path=db_path, output_path=output_path+'/zips')
         conn.close()
-
-            
-
-     
